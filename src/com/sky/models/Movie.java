@@ -3,6 +3,8 @@ package com.sky.models;
 import org.joda.time.LocalTime;
 import org.joda.time.Minutes;
 import org.joda.time.Period;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 public class Movie {
 	private int id;
@@ -47,6 +49,22 @@ public class Movie {
 	
 	public int getMinuteDuration() {
 		return (Minutes.minutesBetween(this.startTime, this.endTime).getMinutes()); 
+	}
+	
+	public int getStartHour() {
+		return this.startTime.getHourOfDay();
+	}
+	
+	public int getStartMinutes() {
+		return this.startTime.getMinuteOfHour();
+	}
+	
+	public int getEndHour() {
+		return this.endTime.getHourOfDay();
+	}
+	
+	public int getEndMinutes() {
+		return this.endTime.getMinuteOfHour();
 	}
 	
 	

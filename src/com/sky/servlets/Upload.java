@@ -17,7 +17,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 public class Upload extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private final String uploadFileName = "movie-data.xml"; 
+	public static final String uploadFileName = "movie-data.xml"; 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("jsp/upload.jsp");
@@ -27,19 +27,23 @@ public class Upload extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String uploadPath = getServletContext().getRealPath("") + File.separator + uploadFileName;
-		System.out.println(uploadPath);
 		
 		try {
 	        List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
 	        for (FileItem item : items) {
 	            if (!item.isFormField()) {
+	            	String fileName = item.getName();
+	            	if (fileName != null && !fileName.endsWith("xml")) {
+	            		throw new Exception("Error: Only XML files can be uploaded.");
+	            	}
 	                File storeFile = new File(uploadPath);
 	                
 	                item.write(storeFile);
 	            }
 	        }
 	    } catch (Exception e) {
-	    	request.setAttribute("error", "Error uploading the XML file.");
+	    	System.out.println(e.getMessage());
+	    	request.setAttribute("error", e.getMessage());
 	    	RequestDispatcher requestDispatcher = request.getRequestDispatcher("jsp/upload.jsp");
 			requestDispatcher.forward(request, response);
 			return;

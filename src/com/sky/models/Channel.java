@@ -5,26 +5,16 @@ import java.util.ArrayList;
 
 public class Channel {
 
-	private String id;
 	private String name;
 	private List<Movie> movies;
 	
-	public Channel(String id, String name, List<Movie> movies) {
-		this.id = id;
+	public Channel(String name, List<Movie> movies) {
 		this.name = name;
 		this.movies = (movies != null) ? movies : new ArrayList<Movie>();
 	}
 	
-	public Channel(String id, String name) {
-		this(id, name, null);
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
+	public Channel(String name) {
+		this(name, null);
 	}
 
 	public String getName() {
@@ -41,6 +31,14 @@ public class Channel {
 
 	public void setMovies(List<Movie> movies) {
 		this.movies = movies;
+	}
+	
+	public void addMovie(Movie movie) {
+		movies.add(movie);
+	}
+
+	public void removeAllMovies() {
+		movies.clear();		
 	}
 	
 }
