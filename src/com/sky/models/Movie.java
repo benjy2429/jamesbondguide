@@ -1,14 +1,16 @@
 package com.sky.models;
 
-import java.util.Date;
+import org.joda.time.LocalTime;
+import org.joda.time.Minutes;
+import org.joda.time.Period;
 
 public class Movie {
 	private int id;
 	private String name;
-	private Date startTime;
-	private Date endTime;
+	private LocalTime startTime;
+	private LocalTime endTime;
 	
-	public Movie(int id, String name, Date startTime, Date endTime) {
+	public Movie(int id, String name, LocalTime startTime, LocalTime endTime) {
 		this.id = id;
 		this.name = name;
 		this.startTime = startTime;
@@ -27,24 +29,24 @@ public class Movie {
 		this.name = name;
 	}
 	
-	public Date getStartTime() {
+	public LocalTime getStartTime() {
 		return startTime;
 	}
 	
-	public void setStartTime(Date startTime) {
+	public void setStartTime(LocalTime startTime) {
 		this.startTime = startTime;
 	}
 	
-	public Date getEndTime() {
+	public LocalTime getEndTime() {
 		return endTime;
 	}
 	
-	public void setEndTime(Date endTime) {
+	public void setEndTime(LocalTime endTime) {
 		this.endTime = endTime;
 	}
 	
-	public double getHourDuration() {
-		return (this.endTime.getTime() - this.startTime.getTime()) / (1000 * 60 * 60);
+	public int getMinuteDuration() {
+		return (Minutes.minutesBetween(this.startTime, this.endTime).getMinutes()); 
 	}
 	
 	

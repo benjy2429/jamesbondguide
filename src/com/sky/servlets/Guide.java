@@ -2,15 +2,15 @@ package com.sky.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Date;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import com.sky.models.*;
 
@@ -26,11 +26,9 @@ public class Guide extends HttpServlet {
 		channels.add(new Channel("pierce_channel", "Pierce Brosnan"));
 		channels.add(new Channel("daniel_channel", "Daniel Craig"));
 		
-		Date start = new Date();
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.HOUR_OF_DAY, 12);
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("h.m a");
 		List<Movie> movies = new ArrayList<Movie>();
-		movies.add(new Movie(1, "Golden Eye", cal.getTime(), cal.getTime()));
+		movies.add(new Movie(1, "Golden Eye", formatter.parseLocalTime("9.00 AM"), formatter.parseLocalTime("11.00 AM")));
 		
 		channels.add(new Channel("test", "Dave", movies));
 		

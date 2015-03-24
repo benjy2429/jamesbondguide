@@ -19,4 +19,14 @@
     <servlet-name>Guide</servlet-name>
     <url-pattern>/Guide</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Upload</display-name>
+    <servlet-name>Upload</servlet-name>
+    <servlet-class>com.sky.servlets.Upload</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Upload</servlet-name>
+    <url-pattern>/Upload</url-pattern>
+  </servlet-mapping>
 </web-app>
