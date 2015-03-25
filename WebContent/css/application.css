@@ -3,6 +3,7 @@
 	overflow-y: hidden;
 	white-space: nowrap;
 	
+	/* Prevent users from selecting text when dragging */ 
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -11,12 +12,9 @@
   user-select: none;
 }
 
-.time-header {
-	font-weight: bold;
-	line-height: 50px;
-}
-
 .times {
+  font-weight: bold;
+  line-height: 50px;
   padding: 0;
   margin-bottom: 0;
   cursor: col-resize;
@@ -49,14 +47,12 @@
 	border-right: 1px solid #CCC;
 }
 
-.channel-title {
+.channel-title, .channel-name {
 	height: 50px;
 	line-height: 50px;
 }
 
 .channel-name {
-	height: 50px;
-	line-height: 50px;
 	border-top: 1px solid #CCC;
 	padding-right: 15px;
 }

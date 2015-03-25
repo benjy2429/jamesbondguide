@@ -22,14 +22,11 @@
     <c:set var="totalWidth" value="${hourWidth * fn:length(times)}" />
     
 	
-	  <div class="time-header">
-      <ul class="times">
-        <c:forEach items="${times}" var="time">
-	        <li>${time}</li>
-        </c:forEach>
-      </ul>
-		</div>
-		
+    <ul class="times">
+      <c:forEach items="${times}" var="time">
+       <li>${time}</li>
+      </c:forEach>
+    </ul>	
 		
 		
 		<c:forEach var="channelMap" items="${channels}">
