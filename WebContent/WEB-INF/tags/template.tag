@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -20,7 +22,7 @@
 	            <span class="icon-bar"></span>
 	            <span class="icon-bar"></span>
 	          </button>
-	          <a class="navbar-brand" href="Guide">TV Guide</a>
+	          <a class="navbar-brand" href="Guide">Programme Guide</a>
 	        </div>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="Upload"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Upload</a></li>
@@ -30,8 +32,16 @@
     </nav>
 
     <div class="container">
+      <c:if test="${not empty error}">
+	      <div class="alert alert-danger" role="alert">${error}</div>
+	    </c:if>
+	    
       <jsp:doBody/>
     </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/application.js"></script>
 
   </body>
 </html>

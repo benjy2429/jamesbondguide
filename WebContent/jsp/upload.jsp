@@ -8,10 +8,6 @@
 	  <h1>Upload Channel Data</h1>
 	</div>
 	
-	<c:if test="${not empty error}">
-		<div class="alert alert-danger" role="alert">${error}</div>
-	</c:if>
-	
 	<form method="post" action="Upload" enctype="multipart/form-data">
 		<div class="form-group">
 	    <label for="file-upload">Upload XML File</label>

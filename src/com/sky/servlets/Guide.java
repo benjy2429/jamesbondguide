@@ -2,8 +2,9 @@ package com.sky.servlets;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -26,7 +28,8 @@ import com.sky.models.*;
 
 public class Guide extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private Map<String,Channel> channels = new HashMap<String,Channel>();
+	private Map<String,Channel> channels = new LinkedHashMap<String,Channel>();
+	private static final Logger LOGGER = Logger.getLogger(Guide.class.getName());
 	
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
@@ -45,14 +48,14 @@ public class Guide extends HttpServlet {
 		
 		try {
 			loadMoviesFromXML();
-		} catch (JDOMException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (JDOMException jde) {
+			LOGGER.log(Level.SEVERE, jde.getMessage());
+			request.setAttribute("error", "Error: The data file is malformed. Please upload a correct version.");
+		} catch (IOException ioe) {
+			LOGGER.log(Level.INFO, "No XML data file has been uploaded yet.");
 		}
 		
-		
 		request.setAttribute("channels", channels);
-		
 		request.setAttribute("startHour", 9);
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("jsp/guide.jsp");
@@ -69,14 +72,14 @@ public class Guide extends HttpServlet {
 	
 	private void loadMoviesFromXML() throws JDOMException, IOException {
 		String filePath = getServletContext().getRealPath("") + File.separator + Upload.uploadFileName;
-
-		SAXBuilder builder = new SAXBuilder();
-		Document doc = builder.build(filePath);
 		
 		// Clear the existing channel data
 		for (Channel channel : channels.values()) {
 			channel.removeAllMovies();
 		}
+		
+		SAXBuilder builder = new SAXBuilder();
+		Document doc = builder.build(filePath);
 		
 		Element rootNode = doc.getRootElement();
 		List<Element> movieNodes = rootNode.getChildren("movie");
