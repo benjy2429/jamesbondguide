@@ -2,9 +2,6 @@ package com.sky.models;
 
 import org.joda.time.LocalTime;
 import org.joda.time.Minutes;
-import org.joda.time.Period;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 public class Movie {
 	private int id;

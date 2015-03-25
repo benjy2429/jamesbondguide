@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <t:template>
@@ -8,56 +9,67 @@
 	  <h1>James Bond Programme Guide</h1>
 	</div>
 	
-	<div class="guideWrapper">
 	
-	  <div class="row time-header">
-	    <div class="col-xs-2">Channel</div>
-	    
-	    <div class="col-xs-10">
-	      <div class="row times">
-	        <div class="col-xs-2">9 AM</div>
-	        <div class="col-xs-2">10 AM</div>
-	        <div class="col-xs-2">11 AM</div>
-	        <div class="col-xs-2">12 PM</div>
-	        <div class="col-xs-2">1 PM</div>
-	        <div class="col-xs-2">2 PM</div>
-	      </div>
-	    </div>
+	<div class="channel-list">
+      <div class="channel-title">Channel</div>
+      <c:forEach var="channelMap" items="${channels}">
+        <div class="channel-name">${channelMap.value.name}</div>
+      </c:forEach>
+    </div>
+	
+	<div class="guide-wrapper">
+	  <c:set var="hourWidth" value="160" />
+    <c:set var="totalWidth" value="${hourWidth * fn:length(times)}" />
+    
+	
+	  <div class="time-header">
+      <ul class="times">
+        <c:forEach items="${times}" var="time">
+	        <li>${time}</li>
+        </c:forEach>
+      </ul>
 		</div>
+		
+		
 		
 		<c:forEach var="channelMap" items="${channels}">
 		  <c:set var="channel" value="${channelMap.value}" />
-		  <div class="row channel clearfix">
-	      <div class="col-xs-2 channel-name">${channel.name}</div>
+		  <div class="channel" style="width:${totalWidth}px;">
+	      <%-- <div class="col-xs-2 channel-name">${channel.name}</div> --%> 
 	     
-	      <div class="col-xs-10 channel-contents">
-	        <div class="row">
 	       
-	          <c:choose>
-	            <c:when test="${empty channel.movies}">
-	              <div class="col-xs-12 no-info">No programme information</div>
-	            </c:when>
-	            <c:otherwise>
-	              <c:forEach items="${channel.movies}" var="movie">
-	                <c:set var="hourOffset" value="${(movie.startHour + (movie.startMinutes / 60)) - startHour}" />
-	                <c:set var="percentOffset" value="${(100 / 6) * hourOffset}" />
-	                <c:if test="${percentOffset < 0}"><c:set var="percentOffset" value="0" /></c:if>
-	                <c:if test="${percentOffset > 100}"><c:set var="percentOffset" value="100" /></c:if>
-	                
-	                <c:set var="width" value="${(100 / (6*60)) * movie.minuteDuration}" />
-	                <c:if test="${width < 0}"><c:set var="width" value="0" /></c:if>
-	                <c:if test="${width > 100}"><c:set var="width" value="100" /></c:if>
-	                <c:if test="${(width + percentOffset) > 100}"><c:set var="width" value="${100 - percentOffset}" /></c:if>
-	                
-	                
-	                <button class="movie" data-toggle="modal" data-target="#recordModal" data-movie-name="${movie.name}" style="left: ${percentOffset}%; width:${width}%">${movie.name}</button>
-	              </c:forEach>
-	            </c:otherwise>
-	          </c:choose>
+         <c:choose>
+           <c:when test="${empty channel.movies}">
+             <div class="no-info">No programmes available</div>
+           </c:when>
+           <c:otherwise>
+             <c:forEach items="${channel.movies}" var="movie">
+               
+               <%-- Calculate the width of this movie element --%>
+               <c:set var="width" value="${hourWidth * (movie.minuteDuration / 60)}" />
+               <c:if test="${width < 0}"><c:set var="width" value="0" /></c:if>
+               
+               <%-- Calculate the start position of this movie element --%>
+               <c:set var="hourOffset" value="${(movie.startHour + (movie.startMinutes / 60)) - startHour}" />
+               <c:set var="pixelOffset" value="${hourWidth * hourOffset}" />
+               
+               <%-- Check for movies that start before the start time and display them correctly --%>
+               <c:if test="${pixelOffset < 0}">
+                 <c:set var="width" value="${width - ((startHour - (movie.startHour + (movie.startMinutes / 60))) * hourWidth)}" />
+                 <c:set var="pixelOffset" value="0" />
+               </c:if>
+               
+               <%-- Check for movies that end before the final time and crop the end off --%>
+               <c:if test="${(pixelOffset + width) > totalWidth}">
+                 <c:set var="width" value="${totalWidth - pixelOffset}" />
+               </c:if>
+               
+               <button class="movie" data-toggle="modal" data-target="#recordModal" data-movie-name="${movie.name}" style="left: ${pixelOffset}px; width:${width}px">${movie.name}</button>
+             </c:forEach>
+           </c:otherwise>
+         </c:choose>
 	
-	        </div>
 	      </div>
-	    </div>
 	  </c:forEach>
   
   </div>

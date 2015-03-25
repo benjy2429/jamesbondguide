@@ -1,38 +1,69 @@
-.guideWrapper {
-	overflow-x: hidden;
+.guide-wrapper {
+	overflow-x: scroll;
+	overflow-y: hidden;
+	white-space: nowrap;
+	
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .time-header {
 	font-weight: bold;
 	line-height: 50px;
-	border-bottom: 1px solid #CCC;
 }
 
-.times > div {
-	border-left: 1px solid #CCC;
+.times {
+  padding: 0;
+  margin-bottom: 0;
+  cursor: col-resize;
+}
+
+.times > li {
+  display: inline-block;
+  text-decoration: none;
+  width: 160px;
+  padding: 0 10px;
+  border-left: 1px solid #CCC;
+  margin-right: -4px;
+}
+
+.times > li:first-child {
+	border-left: none;
 }
 
 .channel {
+  white-space: nowrap;
+  height: 50px;
+  position: relative;
+  line-height: 50px;
+  border-top: 1px solid #CCC;
+}
 
+.channel-list {
+	float: left;
+	font-weight: bold;
+	border-right: 1px solid #CCC;
+}
+
+.channel-title {
+	height: 50px;
+	line-height: 50px;
 }
 
 .channel-name {
-	font-weight: bold;
-}
-
-.channel-name, .channel-contents {
 	height: 50px;
 	line-height: 50px;
-	border-bottom: 1px solid #CCC;
-}
-
-.channel-contents > .row {
-	position: relative;
-	height: 50px;
+	border-top: 1px solid #CCC;
+	padding-right: 15px;
 }
 
 .no-info {
-	text-align: center;
+	text-align: left;
+	padding-left: 30px;
 	color: #999;
 }
 
@@ -43,6 +74,9 @@
 	border-left: 5px solid rgba(150,200,255,1);
 	background-color: rgba(150,200,255,0.2);
 	transition: background-color 0.3s;
+	white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .movie:hover {
