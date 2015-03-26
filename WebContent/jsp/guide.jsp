@@ -18,8 +18,8 @@ It is rendered into the template
 	
 	<div class="channel-list">
       <div class="channel-title">Channel</div>
-      <c:forEach var="channel" items="${channels}">
-        <div class="channel-name">${channel.name}</div>
+      <c:forEach var="channelMap" items="${channels}">
+        <div class="channel-name">${channelMap.value.name}</div>
       </c:forEach>
     </div>
 	
@@ -35,7 +35,8 @@ It is rendered into the template
     </ul>	
 		
 		
-		<c:forEach var="channel" items="${channels}">
+		<c:forEach var="channelMap" items="${channels}">
+		  <c:set var="channel" value="${channelMap.value}" />
 		  <div class="channel" style="width:${totalWidth}px;">
 	      <%-- <div class="col-xs-2 channel-name">${channel.name}</div> --%> 
 	     

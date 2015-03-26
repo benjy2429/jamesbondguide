@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -64,11 +66,13 @@ public class Guide extends HttpServlet {
 	 * Overrides doGet from HTTPServlet
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Attempt to load data in from the XML data file
+		// Create a list of empty channels
+		DataStoreManager dataStoreManager = new DataStoreManager(getServletContext());
+		LinkedHashMap<String, Channel> channels = dataStoreManager.createChannels();
+		
 		try {
-			DataStoreManager dataStoreManager = new DataStoreManager(getServletContext());
-			ArrayList<Channel> channels = dataStoreManager.getChannelsWithMovies(FIRST_HOUR, LAST_HOUR);
-			request.setAttribute("channels", channels);
+			// Attempt to load data in from the XML data file
+			channels = dataStoreManager.loadMovies(channels, FIRST_HOUR, LAST_HOUR);
 			
 		} catch (JDOMException | IllegalArgumentException e) {
 			// If there was an error in the file, log it and display an error to the user
@@ -82,6 +86,7 @@ public class Guide extends HttpServlet {
 		}
 		
 		// Set parameters to send to the view
+		request.setAttribute("channels", channels);
 		request.setAttribute("times", times);
 		request.setAttribute("startHour", FIRST_HOUR);
 		

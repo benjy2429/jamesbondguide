@@ -40,13 +40,9 @@ $(document).ready(function(){
 			// Also ensure that dragging is not accidentally enabled on modal close
 			aboutToDrag = false;
 			$("#recordModal").modal();
+			var movieName = $(this).data("movie-name");
+		    $(".modal-movie-name").text(movieName);
 		}
 	});
-	
-	// When showing the modal window, set the movie title to the value stored in the callers data attribute
-	 $("#recordModal").on("show.bs.modal", function(e) {
-		    var movieName = $(e.relatedTarget).data("movie-name");
-		    $(".modal-movie-name").text(movieName);
-	}); 
 	
 });

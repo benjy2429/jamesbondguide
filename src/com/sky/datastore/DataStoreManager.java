@@ -2,7 +2,6 @@ package com.sky.datastore;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -95,12 +94,17 @@ public class DataStoreManager {
 	
 	/**
 	 * Reads and parses the XML data file if present. The data is cast into Movie objects which are then added to the relevant Channel 
+	 * @param channels The map of channels to add movies to. If null, new channels will be created
+	 * @param firstHour	The first hour to be displayed on the guide
+	 * @param lastHour The last hour to be displayed on the guide
 	 * @throws JDOMException Thrown if the XML file is malformed and cannot be parsed
 	 * @throws IOException Thrown if there is an error reading the file
 	 * @throws IllegalArgumentException	Thrown if the start or end time cannot be parsed
 	 */
-	public ArrayList<Channel> getChannelsWithMovies(int firstHour, int lastHour) throws JDOMException, IOException, IllegalArgumentException {
-		LinkedHashMap<String,Channel> channels = createChannels();
+	public LinkedHashMap<String,Channel> loadMovies(LinkedHashMap<String,Channel> channels, int firstHour, int lastHour) throws JDOMException, IOException, IllegalArgumentException {
+		if (channels == null) {
+			channels = createChannels();
+		}
 		
 		// Parse the XML file
 		SAXBuilder builder = new SAXBuilder();
@@ -136,6 +140,6 @@ public class DataStoreManager {
 			}
 		}
 		
-		return new ArrayList<Channel>(channels.values());
+		return channels;
 	}
 }
