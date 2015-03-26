@@ -10,7 +10,7 @@ It includes the head, imports, navbar and the links
 <html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sky - James Bond TV Guide</title>
+    <title>Sky - James Bond Programme Guide</title>
     <link rel = "stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel = "stylesheet" href="${pageContext.request.contextPath}/css/application.css">
   </head>
