@@ -55,11 +55,11 @@
 .channel-title, .channel-name {
 	height: 50px;
 	line-height: 50px;
+	padding-right: 15px;
 }
 
 .channel-name {
 	border-top: 1px solid #CCC;
-	padding-right: 15px;
 }
 
 .no-info {
