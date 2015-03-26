@@ -22,7 +22,6 @@
   line-height: 50px;
   padding: 0;
   margin-bottom: 0;
-  cursor: col-resize;
 }
 
 .times > li {
@@ -78,10 +77,12 @@
 	white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: center;
 }
 
 .movie:hover {
 	background-color: rgba(150,200,255,0.3);
+  cursor: pointer;
 }
 
 #recordModal img.skyLogo {

@@ -66,7 +66,7 @@ It is rendered into the template
                  <c:set var="width" value="${totalWidth - pixelOffset}" />
                </c:if>
                
-               <button class="movie" data-toggle="modal" data-target="#recordModal" data-movie-name="${movie.name}" style="left: ${pixelOffset}px; width:${width}px">${movie.name}</button>
+               <div class="movie" data-movie-name="${movie.name}" style="left: ${pixelOffset}px; width:${width}px">${movie.name}</div>
              </c:forEach>
            </c:otherwise>
          </c:choose>
